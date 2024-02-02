@@ -1,0 +1,16 @@
+{
+    "name": "murthysathiya007/insta-graph-api-sdk",
+    "description": "Instagram Graph API PHP SDK",
+    "keywords": ["graph api", "sdk", "php","instagram graph api","insta graph api"],
+    "type": "library",
+    "require": {
+        "php": "^8.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sathiyamurthy",
+            "homepage": "https://github.com/murthysathiya007/insta-graph-api-sdk"
+        }
+    ]
+}
