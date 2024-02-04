@@ -1,0 +1,87 @@
+<?php
+
+namespace Hashtag;
+
+use Instagram;
+use Request\Params;
+use Request\Fields;
+
+/**
+ * Recent Media
+ *
+ * Get recent media for a hashtag.
+ *     - Endpoint Format: GET /{ig-hashtag-id}/recent_media?user_id={user-id}&fields={fields}&access_token={access-token}
+ *     - Facebook docs: https://developers.facebook.com/docs/instagram-api/reference/ig-hashtag/recent-media
+ * 
+ */
+class RecentMedia extends Hashtag {
+    /**
+     * @const Instagram endpoint for the request.
+     */
+    const ENDPOINT = 'recent_media';
+
+    /**
+     * @var integer $userId Instagram user id making the api request.
+     */
+    protected $userId;
+
+    /**
+     * Contructor for instantiating a new object.
+     *
+     * @param array $config for the class.
+     * @return void
+     */
+    public function __construct( $config ) {
+        // call parent for setup
+        parent::__construct( $config );
+
+        // store the user id
+        $this->userId = $config['user_id'];
+    }
+
+    /**
+     * Get info on a hashtag.
+     *
+     * @param array $params params for the GET request.
+     * @return Instagram response.
+     */
+    public function getSelf( $params = array() ) {
+        $getParams = array( // parameters for our endpoint
+            'endpoint' => '/' . $this->hashtagId . '/' . self::ENDPOINT,
+            'params' => $this->getParams( $params )
+        );
+
+        // ig get request
+        $response = $this->get( $getParams );
+
+        // return response
+        return $response;
+    }
+
+    /**
+     * Get params for the request.
+     *
+     * @param array $params Specific params for the request.
+     * @return array of params for the request.
+     */
+    public function getParams( $params = array() ) {
+        if ( $params ) { // specific params have been requested
+            return $params;
+        } else { // get all params
+            // get field params
+            $params[Params::FIELDS] = Fields::getDefaultMediaFields() . ',' .
+                Fields::CHILDREN . '{' .
+                    Fields::getDefaultMediaChildrenFields() .
+                '}'
+            ;
+
+            // add on the since query param farthest back it can be set is 24 hours
+            $params[Params::USER_ID] = $this->userId;
+
+            // return our params
+            return $params;
+        }
+    }
+}
+
+?>
