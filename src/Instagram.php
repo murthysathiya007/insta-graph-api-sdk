@@ -2,10 +2,10 @@
 
 namespace Instagram;
 
-use Instagram\Request\Request;
-use Instagram\Request\Curl;
-use Instagram\Request\Params;
-use Instagram\Request\Fields;
+use Request\Request;
+use Request\Curl;
+use Request\Params;
+use Request\Fields;
 
 /**
  * Instagram
